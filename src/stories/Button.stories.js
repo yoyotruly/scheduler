@@ -6,9 +6,11 @@ import Button from "../components/Button";
 export default {
   title: 'Button',
   component: Button,
-  // parameters: {
-  //   backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-  // }
+  parameters: {
+    backgrounds: {
+      values: [{ name: "dark", value: "#222f3e" }]
+    } 
+  }
 };
 
 export const Base = () => {
