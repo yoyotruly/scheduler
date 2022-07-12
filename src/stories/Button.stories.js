@@ -11,18 +11,42 @@ export default {
   // }
 };
 
-export const Base = () => <Button>Base</Button>
+export const Base = () => {
+  return (
+    <Button>
+      Base
+    </Button>
+  )
+}
 
-export const Confirm = () => <Button confirm>Confirm</Button>
+export const Confirm = () => {
+  return (
+    <Button confirm>
+      Confirm
+    </Button>
+  )
+}
 
-export const Danger = () => <Button danger>Cancel</Button>
+export const Danger = () => {
+  return (
+    <Button danger>
+      Cancel
+    </Button>
+  )
+}
 
 export const Clickable = () => {
-<Button onClick={action("button-clicked")}>Clickable</Button>
+  return (
+    <Button onClick={action("button-clicked")}>
+      Clickable
+    </Button>
+  )
 }
 
 export const Disabled = () => {
-  <Button disabled onClick={action("button-clicked")}>
-    Disabled
-  </Button>
+  return (
+    <Button disabled onClick={action("button-clicked")}>
+      Disabled
+    </Button>
+  )
 }
