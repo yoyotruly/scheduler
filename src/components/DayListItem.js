@@ -1,19 +1,15 @@
 import "./DayListItem.scss"
+import classNames from "classnames"
 
 export default function DayListItem(props) {
   const handleClick = () => {
     return props.setDay ? props.setDay(props.name) : null
   }
 
-  let dayClass = "day-list__item"
-
-  if (props.selected) {
-    dayClass += " day-list__item--selected"
-  }
-
-  if (props.spots === 0) {
-    dayClass += " day-list__item--full"
-  }
+  const dayClass = classNames("day-list__item", {
+    "day-list__item--selected": props.selected,
+    "day-list__item--full": props.spots === 0
+  })
 
   const formatSpots = (spots) => {
     if (spots === 0) return "no spots"
