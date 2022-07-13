@@ -1,15 +1,11 @@
 import "./Button.scss"
+import classNames from "classnames";
 
 export default function Button(props) {
-  let buttonClass = "button"
-
-  if (props.confirm) {
-    buttonClass += " button--confirm"
-  }
-  
-  if (props.danger) {
-    buttonClass += " button--danger"
-  }
+  const buttonClass = classNames("button", {
+    "button--confirm": props.confirm,
+    "button--danger": props.danger
+  });
 
   return (
     <button
