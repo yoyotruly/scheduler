@@ -8,11 +8,11 @@ export default function DayListItem(props) {
   let dayClass = "day-list__item"
 
   if (props.selected) {
-    dayClass += "--selected"
+    dayClass += " day-list__item--selected"
   }
 
   if (props.spots === 0) {
-    dayClass += "--full"
+    dayClass += " day-list__item--full"
   }
 
   return (
