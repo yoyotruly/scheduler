@@ -3,7 +3,7 @@ import classNames from "classnames"
 
 export default function DayListItem(props) {
   const handleClick = () => {
-    return props.setDay ? props.setDay(props.name) : null
+    return props.setDay(props.name)
   }
 
   const dayClass = classNames("day-list__item", {
