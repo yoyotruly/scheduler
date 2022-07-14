@@ -22,7 +22,6 @@ const interviewer = {
 export const Unselected = () => {
   return (
     <InterviewerListItem
-      id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
     />
@@ -32,7 +31,6 @@ export const Unselected = () => {
 export const Selected = () => {
   return (
     <InterviewerListItem
-      id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
       selected
@@ -43,10 +41,9 @@ export const Selected = () => {
 export const Clickable = () => {
   return (
     <InterviewerListItem
-      id={interviewer.id}
       name={interviewer.name}
       avatar={interviewer.avatar}
-      setInterviewer={action("setInterviewer")}
+      setInterviewer={() => action("setInterviewer")(interviewer.id)}
     />
   )
 }
