@@ -32,13 +32,13 @@ const days = [
 ];
 
 export const Monday = () => {
-  return <DayList days={days} day={"Monday"} setDay={action("setDay")} />
+  return <DayList days={days} value={"Monday"} onChange={action("setDay")} />
 }
 
 export const Tuesday = () => {
-  return <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
+  return <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
 }
 
 export const Wednesday = () => {
-  return <DayList days={days} day={"Wednesday"} setDay={action("setDay")} />
+  return <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
 }

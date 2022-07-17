@@ -33,7 +33,7 @@ export const Selected = () => {
   return (
     <InterviewerList
       interviewers={interviewers}
-      interviewer={3}
+      value={3}
     />
   )
 }
@@ -42,7 +42,7 @@ export const Clickable = () => {
   return (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   )
 }
