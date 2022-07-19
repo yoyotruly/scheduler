@@ -1,14 +1,15 @@
 import { action } from "@storybook/addon-actions";
 
 import "../index.scss";
-import Appointment from "../components/Appointment";
-import Header from "../components/Appointment/Header";
-import Empty from "../components/Appointment/Empty";
-import Show from "../components/Appointment/Show";
+import AppointmentComponent from "../components/Appointment";
+import HeaderComponent from "../components/Appointment/Header";
+import EmptyComponent from "../components/Appointment/Empty";
+import ShowComponent from "../components/Appointment/Show";
+import ConfirmComponent from "../components/Appointment/Confirm";
 
 export default {
   title: 'Appointment',
-  component: Appointment,
+  component: AppointmentComponent,
   parameters: {
     backgrounds: {
       values: [{ name: "white", value: "#fff" }]
@@ -16,20 +17,20 @@ export default {
   }
 };
 
-export const AppointmentDefault = () => {
-  return <Appointment />
+export const Appointment = () => {
+  return <AppointmentComponent />
 }
 
 export const AppointmentWithTime = () => {
-  return <Appointment time="12pm" />
+  return <AppointmentComponent time="12pm" />
 }
 
-export const AppointmentHeader = () => {
-  return <Header time="12pm" />
+export const Header = () => {
+  return <HeaderComponent time="12pm" />
 }
 
-export const AppointmentEmpty = () => {
-  return <Empty onAdd={action("onAdd")} />
+export const Empty = () => {
+  return <EmptyComponent onAdd={action("onAdd")} />
 }
 
 const interviewer = {
@@ -38,13 +39,23 @@ const interviewer = {
   avatar: "https://i.imgur.com/LpaY82x.png"
 };
 
-export const AppointmentShow = () => {
+export const Show = () => {
   return (
-    <Show
+    <ShowComponent
       student="Lydia Miller-Jones"
       interviewer={interviewer}
       onEdit={action("onEdit")}
       onDelete={action("onDelete")}
+    />
+  )
+}
+
+export const Confirm = () => {
+  return (
+    <ConfirmComponent
+      message="Delete the appointment?"
+      onConfirm={action("onConfirm")}
+      onCancel={action("onCancel")}
     />
   )
 }
