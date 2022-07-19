@@ -3,6 +3,7 @@ import { action } from "@storybook/addon-actions";
 import "../index.scss";
 import Appointment from "../components/Appointment";
 import Header from "../components/Appointment/Header";
+import Empty from "../components/Appointment/Empty";
 
 export default {
   title: 'Appointment',
@@ -24,4 +25,8 @@ export const AppointmentWithTime = () => {
 
 export const HeaderDefault = () => {
   return <Header time="12pm" />
+}
+
+export const EmptyDefault = () => {
+  return <Empty onAdd={action("onAdd")} />
 }
