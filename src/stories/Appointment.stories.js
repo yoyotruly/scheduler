@@ -7,6 +7,7 @@ import EmptyComponent from "../components/Appointment/Empty";
 import ShowComponent from "../components/Appointment/Show";
 import ConfirmComponent from "../components/Appointment/Confirm";
 import StatusComponent from "../components/Appointment/Status";
+import ErrorComponent from "../components/Appointment/Error";
 
 export default {
   title: 'Appointment',
@@ -65,6 +66,15 @@ export const Status = () => {
   return (
     <StatusComponent
       message="Deleting..."
+    />
+  )
+}
+
+export const Error = () => {
+  return (
+    <ErrorComponent
+      message="Could not delete appointment."
+      onClose={action("onClose")}
     />
   )
 }
