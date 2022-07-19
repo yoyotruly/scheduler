@@ -6,6 +6,7 @@ import HeaderComponent from "../components/Appointment/Header";
 import EmptyComponent from "../components/Appointment/Empty";
 import ShowComponent from "../components/Appointment/Show";
 import ConfirmComponent from "../components/Appointment/Confirm";
+import StatusComponent from "../components/Appointment/Status";
 
 export default {
   title: 'Appointment',
@@ -56,6 +57,14 @@ export const Confirm = () => {
       message="Delete the appointment?"
       onConfirm={action("onConfirm")}
       onCancel={action("onCancel")}
+    />
+  )
+}
+
+export const Status = () => {
+  return (
+    <StatusComponent
+      message="Deleting..."
     />
   )
 }
