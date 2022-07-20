@@ -38,6 +38,30 @@ export const Appointment = () => {
   return <AppointmentComponent />
 }
 
+export const AppointmentEmpty = () => {
+  return (
+    <>
+      <AppointmentComponent id={1} time="4pm" />
+      <AppointmentComponent time="5pm" />
+    </>
+  )
+}
+
+export const AppointmentBooked = () => {
+  return (
+    <>
+      <AppointmentComponent
+        id={1}
+        time="4pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <AppointmentComponent
+        time="5pm"
+      />
+    </>
+  )
+}
+
 export const AppointmentWithTime = () => {
   return <AppointmentComponent time="12pm" />
 }
