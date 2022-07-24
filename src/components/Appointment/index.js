@@ -4,6 +4,7 @@ import Empty from "./Empty";
 import Show from "./Show";
 import Form from "./Form";
 import "./styles.scss";
+import axios from "axios";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -13,6 +14,16 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  const save = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    props.bookInterview(props.id, interview)
+    transition(SHOW)
+  }
 
   return (
     <article className="appointment">
@@ -30,6 +41,7 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           onCancel={back}
+          onSave={save}
         />
       }
     </article>

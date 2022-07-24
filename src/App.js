@@ -37,6 +37,27 @@ function App() {
     });
   }, [])
 
+  const bookInterview = (id, interview) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState(prevState => ({
+      ...prevState,
+      appointments
+    }))
+
+    axios
+    .put(`/api/appointments/${id}`, appointment)
+    .then((response) => console.log(response));
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const dailyInterviewers = getInterviewersForDay(state, state.day)
 
@@ -49,6 +70,7 @@ function App() {
         {...appointment}
         interview={interview}
         interviewers={dailyInterviewers}
+        bookInterview={bookInterview}
       />
     )
   })
