@@ -2,13 +2,15 @@ import useVisualMode from "../../hooks/useVisualMode";
 import Header from "./Header";
 import Empty from "./Empty";
 import Show from "./Show";
+import Status from "./Status";
 import Form from "./Form";
 import "./styles.scss";
-import axios from "axios";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
@@ -21,8 +23,17 @@ export default function Appointment(props) {
       interviewer
     };
 
+    transition(SAVING, true)
+
     props.bookInterview(props.id, interview)
-    transition(SHOW)
+    .then(() => transition(SHOW))
+  }
+
+  const remove = () => {
+    transition(DELETING, true)
+
+    props.cancelInterview(props.id)
+    .then(() => transition(EMPTY))
   }
 
   return (
@@ -32,11 +43,10 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={remove}
         />
       }
-      { mode === "EMPTY" &&
-        <Empty onAdd={() => transition(CREATE)} />
-      }
+      { mode === "EMPTY" && <Empty onAdd={() => transition(CREATE)} /> }
       { mode === "CREATE" &&
         <Form
           interviewers={props.interviewers}
@@ -44,6 +54,8 @@ export default function Appointment(props) {
           onSave={save}
         />
       }
+      { mode === "SAVING" && <Status message="Saving..." /> }
+      { mode === "DELETING" && <Status message="DELETING..." /> }
     </article>
   )
 }

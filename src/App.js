@@ -53,9 +53,26 @@ function App() {
       appointments
     }))
 
-    axios
-    .put(`/api/appointments/${id}`, appointment)
-    .then((response) => console.log(response));
+    return axios.put(`/api/appointments/${id}`, appointment)
+  }
+
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState(prevState => ({
+      ...prevState,
+      appointments
+    }))
+
+    return axios.delete(`/api/appointments/${id}`, appointment)
   }
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
@@ -71,6 +88,7 @@ function App() {
         interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     )
   })
