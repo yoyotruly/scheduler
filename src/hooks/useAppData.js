@@ -1,16 +1,6 @@
 import axios from "axios";
 import { useEffect, useReducer } from "react";
 
-// case "countSpontsRemaining":
-//   const currentDay = state.days.filter(dayObj => dayObj.name === state.day)[0]
-
-//   const spots = currentDay.appointments.filter(id => !state.appointments[id].interview).length
-
-//   const newDay = {...currentDay, spots}
-//   const newDays = [...state.days]
-  
-//   return { ...state, days: [newDays] }
-
 
 export default function useAppData() {
   const ACTIONS = {
@@ -43,9 +33,22 @@ export default function useAppData() {
           [action.id]: appointment
         };
 
+        const days = state.days.map(dayObj => {
+          if (!dayObj.appointments.includes(action.id)) return dayObj
+
+          const currentSpots = dayObj.appointments.reduce((acc, appointmentId) => {
+            return acc + !state.appointments[appointmentId].interview
+          }, 0)
+          
+          const spots = action.interview ? currentSpots - 1 : currentSpots + 1
+
+          return { ...dayObj, spots }
+        })
+
         return {
           ...state,
-          appointments
+          appointments,
+          days
         };
       
       default:
@@ -80,25 +83,25 @@ export default function useAppData() {
   }
 
   const bookInterview = (id, interview) => {
-    dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview });
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
 
-    return axios.put(`/api/appointments/${id}`, appointment)
+    return axios
+    .put(`/api/appointments/${id}`, appointment)
+    .then(() => dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview }))
   }
 
   const cancelInterview = (id) => {
-    dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview:null });
-
     const appointment = {
       ...state.appointments[id],
       interview: null
     };
 
-    return axios.delete(`/api/appointments/${id}`, appointment)
+    return axios
+    .delete(`/api/appointments/${id}`, appointment)
+    .then(() => dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview: null }))
   }
 
   return { state, setDay, bookInterview, cancelInterview }
