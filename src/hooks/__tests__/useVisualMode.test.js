@@ -2,7 +2,6 @@ import { act, renderHook } from "@testing-library/react";
 
 import useVisualMode from "../useVisualMode";
 
-
 const FIRST = "FIRST";
 const SECOND = "SECOND";
 const THIRD = "THIRD";

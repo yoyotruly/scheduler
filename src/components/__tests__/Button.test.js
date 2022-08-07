@@ -28,7 +28,7 @@ it("renders a confirm button", () => {
 
 it("renders a danger button", () => {
   render(<Button danger>Danger</Button>);
-  
+
   expect(screen.getByText("Danger")).toHaveClass("button--danger");
 });
 

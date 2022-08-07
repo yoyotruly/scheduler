@@ -4,29 +4,26 @@ import "../index.scss";
 import InterviewerListItem from "../components/InterviewerListItem";
 
 export default {
-  title: 'InterviewerListItem',
+  title: "InterviewerListItem",
   component: InterviewerListItem,
   parameters: {
     backgrounds: {
-      values: [{ name: "dark", value: "#222f3e" }]
-    } 
-  }
+      values: [{ name: "dark", value: "#222f3e" }],
+    },
+  },
 };
 
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
-  avatar: "https://i.imgur.com/LpaY82x.png"
+  avatar: "https://i.imgur.com/LpaY82x.png",
 };
 
 export const Unselected = () => {
   return (
-    <InterviewerListItem
-      name={interviewer.name}
-      avatar={interviewer.avatar}
-    />
-  )
-}
+    <InterviewerListItem name={interviewer.name} avatar={interviewer.avatar} />
+  );
+};
 
 export const Selected = () => {
   return (
@@ -35,8 +32,8 @@ export const Selected = () => {
       avatar={interviewer.avatar}
       selected
     />
-  )
-}
+  );
+};
 
 export const Clickable = () => {
   return (
@@ -45,5 +42,5 @@ export const Clickable = () => {
       avatar={interviewer.avatar}
       setInterviewer={() => action("setInterviewer")(interviewer.id)}
     />
-  )
-}
+  );
+};

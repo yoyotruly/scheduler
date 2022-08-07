@@ -13,7 +13,7 @@ import FormComponent from "../components/Appointment/Form";
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
-  avatar: "https://i.imgur.com/LpaY82x.png"
+  avatar: "https://i.imgur.com/LpaY82x.png",
 };
 
 const interviewers = [
@@ -21,22 +21,22 @@ const interviewers = [
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
   { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
   { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-  { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
+  { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" },
 ];
 
 export default {
-  title: 'Appointment',
+  title: "Appointment",
   component: AppointmentComponent,
   parameters: {
     backgrounds: {
-      values: [{ name: "white", value: "#fff" }]
-    } 
-  }
+      values: [{ name: "white", value: "#fff" }],
+    },
+  },
 };
 
 export const Appointment = () => {
-  return <AppointmentComponent />
-}
+  return <AppointmentComponent />;
+};
 
 export const AppointmentEmpty = () => {
   return (
@@ -44,8 +44,8 @@ export const AppointmentEmpty = () => {
       <AppointmentComponent id={1} time="4pm" />
       <AppointmentComponent time="5pm" />
     </>
-  )
-}
+  );
+};
 
 export const AppointmentBooked = () => {
   return (
@@ -55,24 +55,22 @@ export const AppointmentBooked = () => {
         time="4pm"
         interview={{ student: "Lydia Miller-Jones", interviewer }}
       />
-      <AppointmentComponent
-        time="5pm"
-      />
+      <AppointmentComponent time="5pm" />
     </>
-  )
-}
+  );
+};
 
 export const AppointmentWithTime = () => {
-  return <AppointmentComponent time="12pm" />
-}
+  return <AppointmentComponent time="12pm" />;
+};
 
 export const Header = () => {
-  return <HeaderComponent time="12pm" />
-}
+  return <HeaderComponent time="12pm" />;
+};
 
 export const Empty = () => {
-  return <EmptyComponent onAdd={action("onAdd")} />
-}
+  return <EmptyComponent onAdd={action("onAdd")} />;
+};
 
 export const Show = () => {
   return (
@@ -82,8 +80,8 @@ export const Show = () => {
       onEdit={action("onEdit")}
       onDelete={action("onDelete")}
     />
-  )
-}
+  );
+};
 
 export const Confirm = () => {
   return (
@@ -92,16 +90,12 @@ export const Confirm = () => {
       onConfirm={action("onConfirm")}
       onCancel={action("onCancel")}
     />
-  )
-}
+  );
+};
 
 export const Status = () => {
-  return (
-    <StatusComponent
-      message="Deleting..."
-    />
-  )
-}
+  return <StatusComponent message="Deleting..." />;
+};
 
 export const Error = () => {
   return (
@@ -109,8 +103,8 @@ export const Error = () => {
       message="Could not delete appointment."
       onClose={action("onClose")}
     />
-  )
-}
+  );
+};
 
 export const Create = () => {
   return (
@@ -119,8 +113,8 @@ export const Create = () => {
       onSave={action("onSave")}
       onCancel={action("onCancel")}
     />
-  )
-}
+  );
+};
 
 export const Edit = () => {
   return (
@@ -131,5 +125,5 @@ export const Edit = () => {
       onSave={action("onSave")}
       onCancel={action("onCancel")}
     />
-  )
-}
+  );
+};

@@ -4,13 +4,13 @@ import "../index.scss";
 import DayList from "../components/DayList";
 
 export default {
-  title: 'DayList',
+  title: "DayList",
   component: DayList,
   parameters: {
     backgrounds: {
-      values: [{ name: "dark", value: "#222f3e" }]
-    } 
-  }
+      values: [{ name: "dark", value: "#222f3e" }],
+    },
+  },
 };
 
 const days = [
@@ -32,13 +32,15 @@ const days = [
 ];
 
 export const Monday = () => {
-  return <DayList days={days} value={"Monday"} onChange={action("setDay")} />
-}
+  return <DayList days={days} value={"Monday"} onChange={action("setDay")} />;
+};
 
 export const Tuesday = () => {
-  return <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
-}
+  return <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />;
+};
 
 export const Wednesday = () => {
-  return <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
-}
+  return (
+    <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
+  );
+};
