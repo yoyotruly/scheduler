@@ -102,8 +102,7 @@ export default function useAppData() {
 
     return axios
       .put(`/api/appointments/${id}`, appointment)
-      .then(() => dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview }))
-      .catch((error) => console.log(error));
+      .then(() => dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview }));
   };
 
   const cancelInterview = (id) => {
@@ -116,8 +115,7 @@ export default function useAppData() {
       .delete(`/api/appointments/${id}`, appointment)
       .then(() =>
         dispatch({ type: ACTIONS.SET_INTERVIEW, id, interview: null })
-      )
-      .catch((error) => console.log(error));
+      );
   };
 
   return { state, setDay, bookInterview, cancelInterview };
