@@ -50,7 +50,10 @@ function App() {
         />
       </section>
 
-      <section className="schedule">{appointmentElements}</section>
+      <section className="schedule">
+        {appointmentElements}
+        <Appointment key="last" time="5pm" />
+      </section>
     </main>
   );
 }
