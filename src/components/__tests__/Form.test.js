@@ -63,7 +63,7 @@ describe("Form", () => {
       <Form
         interviewers={interviewers}
         student="Lydia Miller-Jones"
-        interviewer={1}
+        interviewer={interviewers[0].id}
         onSave={onSave}
       />
     );
