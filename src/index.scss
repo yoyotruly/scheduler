@@ -1,4 +1,6 @@
 @use "./styles/variables" as *;
+@use "./styles/reset.scss" as *;
+@use "./styles/typography.scss" as *;
 
 * {
   box-sizing: border-box;
