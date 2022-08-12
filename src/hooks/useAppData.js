@@ -44,9 +44,6 @@ export default function useAppData() {
           return { ...dayObj, spots };
         });
 
-        console.log(state.appointments);
-        console.log(appointments);
-
         return {
           ...state,
           appointments,
