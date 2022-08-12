@@ -24,7 +24,7 @@ export default function useAppData() {
       case ACTIONS.SET_INTERVIEW:
         const appointment = {
           ...state.appointments[action.id],
-          interview: { ...action.interview },
+          interview: action.interview ? { ...action.interview } : null,
         };
 
         const appointments = {
@@ -35,17 +35,17 @@ export default function useAppData() {
         const days = state.days.map((dayObj) => {
           if (!dayObj.appointments.includes(action.id)) return dayObj;
 
-          const currentSpots = dayObj.appointments.reduce(
-            (acc, appointmentId) => {
-              return acc + !state.appointments[appointmentId].interview;
-            },
-            0
-          );
-
-          const spots = action.interview ? currentSpots - 1 : currentSpots + 1;
+          const spots = dayObj.appointments.reduce((acc, appointmentId) => {
+            // explicitly checking if (interview === null) to avoid edge cases
+            // where interview may have other falsy values
+            return acc + (appointments[appointmentId].interview === null);
+          }, 0);
 
           return { ...dayObj, spots };
         });
+
+        console.log(state.appointments);
+        console.log(appointments);
 
         return {
           ...state,
@@ -65,7 +65,7 @@ export default function useAppData() {
     days: [],
     appointments: {},
     interviewers: {},
-    error: null,
+    // error: null,
   });
 
   useEffect(() => {
@@ -73,21 +73,20 @@ export default function useAppData() {
       axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
-    ])
-      .then((all) =>
-        dispatch({
-          type: ACTIONS.SET_APP_DATA,
-          days: all[0].data,
-          appointments: all[1].data,
-          interviewers: all[2].data,
-        })
-      )
-      .catch((error) =>
-        dispatch({
-          type: ACTIONS.SET_APP_DATA,
-          error,
-        })
-      );
+    ]).then((all) =>
+      dispatch({
+        type: ACTIONS.SET_APP_DATA,
+        days: all[0].data,
+        appointments: all[1].data,
+        interviewers: all[2].data,
+      })
+    );
+    // .catch((error) =>
+    //   dispatch({
+    //     type: ACTIONS.SET_APP_DATA,
+    //     error,
+    //   })
+    // );
   }, [ACTIONS.SET_APP_DATA]);
 
   const setDay = (day) => {
