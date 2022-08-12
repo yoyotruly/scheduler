@@ -21,7 +21,7 @@ export default function useAppData() {
       case ACTIONS.SET_DAY:
         return { ...state, day: action.day };
 
-      case ACTIONS.SET_INTERVIEW:
+      case ACTIONS.SET_INTERVIEW: {
         const appointment = {
           ...state.appointments[action.id],
           interview: action.interview ? { ...action.interview } : null,
@@ -35,6 +35,7 @@ export default function useAppData() {
         const days = state.days.map((dayObj) => {
           if (!dayObj.appointments.includes(action.id)) return dayObj;
 
+          // find selected day's appointments and count the ones where interview is null
           const spots = dayObj.appointments.reduce((acc, appointmentId) => {
             // explicitly checking if (interview === null) to avoid edge cases
             // where interview may have other falsy values
@@ -49,6 +50,7 @@ export default function useAppData() {
           appointments,
           days,
         };
+      }
 
       default:
         throw new Error(
