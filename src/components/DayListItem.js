@@ -1,5 +1,5 @@
-import "./DayListItem.scss";
 import classNames from "classnames";
+import "./DayListItem.scss";
 
 export default function DayListItem(props) {
   const handleClick = () => {

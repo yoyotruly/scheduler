@@ -1,5 +1,5 @@
-import "./InterviewerListItem.scss";
 import classNames from "classnames";
+import "./InterviewerListItem.scss";
 
 export default function InterviewerListItem(props) {
   const interviewerClass = classNames("interviewers__item", {
