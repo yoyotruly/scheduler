@@ -68,6 +68,17 @@ export default function useAppData() {
   });
 
   useEffect(() => {
+    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    webSocket.onopen = () => {
+      webSocket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "SET_INTERVIEW") {
+          dispatch({ type: ACTIONS.SET_INTERVIEW, ...data });
+        }
+      };
+    };
+
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -87,7 +98,7 @@ export default function useAppData() {
           error,
         })
       );
-  }, [ACTIONS.SET_APP_DATA]);
+  }, [ACTIONS.SET_APP_DATA, ACTIONS.SET_INTERVIEW]);
 
   const setDay = (day) => {
     dispatch({ type: ACTIONS.SET_DAY, day });

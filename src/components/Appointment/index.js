@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useVisualMode from "../../hooks/useVisualMode";
 import Header from "./Header";
 import Empty from "./Empty";
@@ -23,6 +24,17 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  // handle web socket mode transition sync for booking and deleting interviews
+  useEffect(() => {
+    if (mode === "EMPTY" && props.interview) {
+      transition(SHOW);
+    }
+
+    if (mode === "SHOW" && props.interview === null) {
+      transition(EMPTY);
+    }
+  }, [mode, props.interview, transition]);
+
   const save = (name, interviewer) => {
     const interview = {
       student: name,
@@ -47,10 +59,10 @@ export default function Appointment(props) {
   };
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {mode === "EMPTY" && <Empty onAdd={() => transition(CREATE)} />}
-      {mode === "SHOW" && (
+      {mode === "SHOW" && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
