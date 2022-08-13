@@ -12,8 +12,8 @@ export default function useAppData() {
     error: null,
   });
 
+  // fetch initial app data
   useEffect(() => {
-    // fetch initial app data
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -33,20 +33,19 @@ export default function useAppData() {
           error,
         })
       );
+  }, []);
 
-    // handle web socket connection for syncing appointment changes
+  // handle web socket connection for syncing appointment changes
+  useEffect(() => {
     const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-
     webSocket.onopen = () => {
       webSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-
         if (data.type === "SET_INTERVIEW") {
           dispatch({ type: ACTIONS.SET_INTERVIEW, ...data });
         }
       };
     };
-
     return () => webSocket.close();
   }, []);
 
