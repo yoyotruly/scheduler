@@ -4,10 +4,6 @@ import Button from "../Button";
 
 afterEach(cleanup);
 
-it("renders without crashing", () => {
-  render(<Button />);
-});
-
 it("renders its `children` prop as text", () => {
   render(<Button>Default</Button>);
 

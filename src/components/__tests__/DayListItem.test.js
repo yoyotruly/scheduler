@@ -4,10 +4,6 @@ import DayListItem from "../DayListItem";
 
 afterEach(cleanup);
 
-it("renders without crashing", () => {
-  render(<DayListItem />);
-});
-
 it("renders 'no spots remaining' when there are 0 spots", () => {
   render(<DayListItem name="Monday" spots={0} />);
 
