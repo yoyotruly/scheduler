@@ -70,7 +70,7 @@ const server = setupServer(
   }),
 
   rest.put("/api/appointments/1", async (req, res, ctx) => {
-    return res(ctx.json());
+    return res(ctx.status(204), ctx.statusText("No Content"));
   })
 );
 
