@@ -16,7 +16,7 @@ Interview Scheduler is a single-page application (SPA) that allows users to book
 
 - SPA built with React
 - Advanced React patterns to manage state and add live updates
-- Real-time updates using WebSocket API across multiple instances
+- Real-time updates using WebSocket API across multiple clients
 - Individual component testing in Storybook, comprehensive unit + integration tests in Jest, and full end-to-end testing with Cypress
 
 ## Get Started
@@ -45,7 +45,13 @@ Vist the website at http://localhost:3000 in your browser
 
 ## Demo
 
+### Functionalities
+
 ![demo](/docs/demo.gif)
+
+### Multi-Client Real-Time Updates
+
+![websocket](/docs/websocket.gif)
 
 ## Dependencies
 
