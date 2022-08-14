@@ -1,26 +1,21 @@
-version: 2
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10.16
-
-    working_directory: ~/client
-
+  build_and_test: # this can be any name you choose
+    executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
-
-workflows:
-  version: 2
-  test:
-    jobs:
-      - build
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm test
+          name: Run tests
+      - run:
+          command: npm build
+          name: Build app
+      - persist_to_workspace:
+          root: ~/project
+          paths: .
