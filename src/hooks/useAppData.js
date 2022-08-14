@@ -36,18 +36,18 @@ export default function useAppData() {
   }, []);
 
   // handle web socket connection for syncing appointment changes
-  useEffect(() => {
-    const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-    webSocket.onopen = () => {
-      webSocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === "SET_INTERVIEW") {
-          dispatch({ type: ACTIONS.SET_INTERVIEW, ...data });
-        }
-      };
-    };
-    return () => webSocket.close();
-  }, []);
+  // useEffect(() => {
+  //   const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+  //   webSocket.onopen = () => {
+  //     webSocket.onmessage = (event) => {
+  //       const data = JSON.parse(event.data);
+  //       if (data.type === "SET_INTERVIEW") {
+  //         dispatch({ type: ACTIONS.SET_INTERVIEW, ...data });
+  //       }
+  //     };
+  //   };
+  //   return () => webSocket.close();
+  // }, []);
 
   const setDay = (day) => {
     dispatch({ type: ACTIONS.SET_DAY, day });
