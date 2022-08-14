@@ -10,7 +10,8 @@ import {
   queryByText,
   findByAltText,
 } from "@testing-library/react";
-import { server, rest } from "../../mocks/testServer";
+import { server } from "../../mocks/server";
+import { rest } from "msw";
 
 import App from "../../App";
 
@@ -18,7 +19,7 @@ describe("App", () => {
   it("defaults to Monday and changes the schedule when a new day is selected", async () => {
     render(<App />);
 
-    await screen.findByText("Monday");
+    expect(await screen.findByText("Monday")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Tuesday"));
 
@@ -28,7 +29,7 @@ describe("App", () => {
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
     const { container } = render(<App />);
 
-    await findByText(container, "Archie Cohen");
+    expect(await findByText(container, "Archie Cohen")).toBeInTheDocument();
 
     const appointment = getAllByTestId(container, "appointment")[0];
     fireEvent.click(getByAltText(appointment, "Add"));
@@ -41,7 +42,9 @@ describe("App", () => {
 
     expect(getByText(appointment, /saving/i)).toBeInTheDocument();
 
-    await findByText(appointment, "Lydia Miller-Jones");
+    expect(
+      await findByText(appointment, "Lydia Miller-Jones")
+    ).toBeInTheDocument();
 
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
@@ -53,7 +56,7 @@ describe("App", () => {
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     const { container } = render(<App />);
 
-    await findByText(container, "Archie Cohen");
+    expect(await findByText(container, "Archie Cohen")).toBeInTheDocument();
 
     const appointment = getAllByTestId(container, "appointment").find(
       (appointment) => queryByText(appointment, "Archie Cohen")
@@ -80,7 +83,7 @@ describe("App", () => {
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     const { container } = render(<App />);
 
-    await findByText(container, "Archie Cohen");
+    expect(await findByText(container, "Archie Cohen")).toBeInTheDocument();
 
     const appointment = getAllByTestId(container, "appointment").find(
       (appointment) => queryByText(appointment, "Archie Cohen")
@@ -95,8 +98,8 @@ describe("App", () => {
 
     expect(getByText(appointment, /saving/i)).toBeInTheDocument();
 
-    await findByText(appointment, "Rick Sanchez");
-    await findByText(appointment, "Tori Malcolm");
+    expect(await findByText(appointment, "Rick Sanchez")).toBeInTheDocument();
+    expect(await findByText(appointment, "Tori Malcolm")).toBeInTheDocument();
 
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
@@ -105,73 +108,76 @@ describe("App", () => {
     expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
   });
 
-  // it("shows the save error when failing to save an appointment", async () => {
-  //   server.use(rest.put("/api/appointments/1"), (req, res, ctx) => {
-  //     return res(ctx.json({}));
-  //   });
+  it("shows the save error when failing to save an appointment", async () => {
+    const { container } = render(<App />);
 
-  //   const { container } = render(<App />);
+    expect(await findByText(container, "Archie Cohen")).toBeInTheDocument();
 
-  //   await findByText(container, "Archie Cohen");
+    server.use(rest.put("/api/appointments/1"), (req, res, ctx) => {
+      return res.once();
+    });
 
-  //   const appointment = getAllByTestId(container, "appointment")[0];
-  //   fireEvent.click(getByAltText(appointment, "Add"));
+    const appointment = getAllByTestId(container, "appointment")[0];
+    fireEvent.click(getByAltText(appointment, "Add"));
 
-  //   fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
-  //     target: { value: "Lydia Miller-Jones" },
-  //   });
-  //   fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
-  //   fireEvent.click(getByText(appointment, "Save"));
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" },
+    });
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    fireEvent.click(getByText(appointment, "Save"));
 
-  //   expect(getByText(appointment, /saving/i)).toBeInTheDocument();
+    expect(getByText(appointment, /saving/i)).toBeInTheDocument();
 
-  //   await findByText(appointment, /could not save appointment/i);
+    expect(
+      await findByText(appointment, /could not save appointment/i)
+    ).toBeInTheDocument();
 
-  //   fireEvent.click(getByAltText(appointment, "Close"));
+    fireEvent.click(getByAltText(appointment, "Close"));
 
-  //   expect(
-  //     getByPlaceholderText(appointment, /enter student name/i)
-  //   ).toBeInTheDocument();
+    expect(
+      getByPlaceholderText(appointment, /enter student name/i)
+    ).toBeInTheDocument();
 
-  //   const day = getAllByTestId(container, "day").find((day) =>
-  //     queryByText(day, "Monday")
-  //   );
+    const day = getAllByTestId(container, "day").find((day) =>
+      queryByText(day, "Monday")
+    );
 
-  //   expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
-  // });
+    expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
+  });
 
-  // it("shows the delete error when failing to delete an existing appointment", async () => {
-  //   server.use(rest.delete("/api/appointments/2"), (req, res, ctx) => {
-  //     return res(ctx.status(500));
-  //   });
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    const { container } = render(<App />);
 
-  //   const { container } = render(<App />);
+    expect(await findByText(container, "Archie Cohen")).toBeInTheDocument();
 
-  //   await findByText(container, "Archie Cohen");
+    server.use(rest.delete("/api/appointments/2"), (req, res, ctx) => {
+      return res(ctx.status(500));
+    });
 
-  //   const appointment = getAllByTestId(container, "appointment").find(
-  //     (appointment) => queryByText(appointment, "Archie Cohen")
-  //   );
-  //   fireEvent.click(getByAltText(appointment, "Delete"));
+    const appointment = getAllByTestId(container, "appointment").find(
+      (appointment) => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(getByAltText(appointment, "Delete"));
 
-  //   expect(
-  //     getByText(appointment, /delete the appointment/i)
-  //   ).toBeInTheDocument();
+    expect(
+      getByText(appointment, /delete the appointment/i)
+    ).toBeInTheDocument();
 
-  //   fireEvent.click(getByText(appointment, "Confirm"));
+    fireEvent.click(getByText(appointment, "Confirm"));
 
-  //   expect(getByText(appointment, /deleting/i)).toBeInTheDocument();
+    expect(getByText(appointment, /deleting/i)).toBeInTheDocument();
+    expect(
+      await findByText(appointment, /could not delete appointment/i)
+    ).toBeInTheDocument();
 
-  //   await findByText(appointment, /could not delete appointment/i);
+    fireEvent.click(getByAltText(appointment, "Close"));
 
-  //   fireEvent.click(getByAltText(appointment, "Close"));
+    expect(getByText(appointment, /Archie Cohen/i)).toBeInTheDocument();
 
-  //   expect(getByText(appointment, /Archie Cohen/i)).toBeInTheDocument();
+    const day = getAllByTestId(container, "day").find((day) =>
+      queryByText(day, "Monday")
+    );
 
-  //   const day = getAllByTestId(container, "day").find((day) =>
-  //     queryByText(day, "Monday")
-  //   );
-
-  //   expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
-  // });
+    expect(getByText(day, /1 spot remaining/i)).toBeInTheDocument();
+  });
 });
