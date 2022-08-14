@@ -1,5 +1,4 @@
 import { rest } from "msw";
-import { setupServer } from "msw/node";
 
 const fixtures = {
   days: [
@@ -56,7 +55,7 @@ const fixtures = {
   },
 };
 
-const server = setupServer(
+export const handlers = [
   rest.get("/api/days", async (req, res, ctx) => {
     return res(ctx.json(fixtures.days));
   }),
@@ -75,11 +74,5 @@ const server = setupServer(
 
   rest.delete("/api/appointments/*", async (req, res, ctx) => {
     return res();
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-export { server, rest };
+  }),
+];
