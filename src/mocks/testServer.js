@@ -69,8 +69,12 @@ const server = setupServer(
     return res(ctx.json(fixtures.interviewers));
   }),
 
-  rest.put("/api/appointments/1", async (req, res, ctx) => {
-    return res(ctx.status(204), ctx.statusText("No Content"));
+  rest.put("/api/appointments/*", async (req, res, ctx) => {
+    return res();
+  }),
+
+  rest.delete("/api/appointments/*", async (req, res, ctx) => {
+    return res();
   })
 );
 
