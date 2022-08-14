@@ -45,7 +45,7 @@ Vist the website at http://localhost:3000 in your browser
 
 ## Demo
 
-![home](/docs/home.png)
+![demo](/docs/demo.gif)
 
 ## Dependencies
 
