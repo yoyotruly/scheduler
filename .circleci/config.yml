@@ -13,14 +13,14 @@ jobs:
       - run:
           command: npm test
           name: Run tests
-      - store_test_results:
-          path: test-results
       - run:
           command: npm run build
           name: Build app
       - persist_to_workspace:
           root: ~/project
           paths: .
+      - store_test_results:
+          path: test-results
 
 workflows:
   test_my_app:
